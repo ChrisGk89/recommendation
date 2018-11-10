@@ -1,19 +1,20 @@
-from flask import Flask, request
+from flask import Flask, request, render_template, jsonify
 from flask_restful import Resource, Api
-from sqlalchemy import create_engine
 from math import sqrt
 
+
+from sqlalchemy import create_engine
 import numpy as np
 from sklearn import preprocessing, neighbors
 import pandas as pd
 from json import dumps
-#from flask.ext.jsonpify import jsonify
+from flask.ext.jsonpify import jsonify
 
 
 ratings = {'Lisa': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
                     'Just My Luck': 3.0, 'Superman Returns': 3.5, 'You, Me and Dupree': 2.5,
                     'The Night Listener': 3.0},
-           'Gene': {'Lady in the Wat er': 3.0, 'Snakes on a Plane': 3.5,
+           'Gene': {'Lady in the Water': 3.0, 'Snakes on a Plane': 3.5,
                     'Just My Luck': 1.5, 'Superman Returns': 5.0, 'The Night Listener': 3.0,
                     'You, Me and Dupree': 3.5},
            'Mike': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.0,
@@ -33,6 +34,15 @@ ratings = {'Lisa': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
 db_connect = create_engine('sqlite:///chinook.db')
 app = Flask(__name__)
 api = Api(app)
+
+
+@app.route('/')
+def main():
+    return render_template('main.html')
+
+
+if __name__ == '__main__':
+    app.run()
 
 
 # Returns a distance-based similarity score for person1 and person2
@@ -59,7 +69,8 @@ def sim_pearson(prefs, p1, p2):
     # Find the number of elements
     n = len(si)
     # if they are no ratings in common, return 0
-    if n == 0: return 0
+    if n == 0:
+        return 0
     # Add up all the preferences
     sum1 = sum([prefs[p1][it] for it in si])
     sum2 = sum([prefs[p2][it] for it in si])
@@ -117,11 +128,8 @@ def getRecommendations(prefs, person, similarity=sim_pearson):
     rankings.reverse()
     return rankings
 
-
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
-
-if __name__ == '__main__':
-    app.run()
+# @app.route('/recommendation/api/v1.0/ratings', methods=['GET'])
+# def get_ratings():
+#    return jsonify({'ratings': ratings})
+# if __name__ == '__main__':
+#    app.run()
