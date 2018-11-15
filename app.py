@@ -84,7 +84,7 @@ def sim_pearson(prefs, person1, person2):
     return r
 
 
-# Returns the best matches for person from the prefs dictionary.
+# Returns the best matches for person from the ratings dictionary.
 #Find the top matches using Euclidean distance as similarity measure
 def topMatches(prefs, person, n=3, similarity=sim_distance):
     scores = [(similarity(prefs, person, other), other)
@@ -95,7 +95,7 @@ def topMatches(prefs, person, n=3, similarity=sim_distance):
     return scores[0:n]
 
 
-# Returns the best matches for person from the prefs dictionary.
+# Returns the best matches for person from the ratings dictionary.
 # Number of results and similarity function are optional params.
 #In our case the similarity measure and number of results is fixed
 # to Pearson correlation coefficient and 3 respectively
