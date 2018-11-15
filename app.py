@@ -206,11 +206,14 @@ def get_recommended_items(prefs, itemMatch, user):
     return rankings
 
 
-@app.route('/findpeople', methods=['GET'])
-def get_matches():
-    res = topMatches2(ratings, "Toby", 3, sim_pearson)
-    jsonify(res)
-    return render_template('findpeople.html', function3 = res)
+@app.route('/')
+def main():
+    return render_template('main.html')
+
+
+@app.route('/userbased')
+def main2():
+    return render_template('userbased.html')
 
 
 @app.route('/euclidean', methods=['GET'])
@@ -227,14 +230,11 @@ def get_pearson():
     return render_template('pearson.html', function2 = result2)
 
 
-@app.route('/')
-def main():
-    return render_template('main.html')
-
-
-@app.route('/userbased')
-def main2():
-    return render_template('userbased.html')
+@app.route('/findpeople', methods=['GET'])
+def get_matches():
+    res = topMatches2(ratings, "Toby", 3, sim_pearson)
+    jsonify(res)
+    return render_template('findpeople.html', function3 = res)
 
 
 @app.route('/itembased')
