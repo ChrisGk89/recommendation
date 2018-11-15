@@ -208,20 +208,23 @@ def get_recommended_items(prefs, itemMatch, user):
 
 @app.route('/findpeople', methods=['GET'])
 def get_matches():
-    res = topMatches2(ratings, "Toby", sim_pearson)
-    return jsonify(res)
+    res = topMatches2(ratings, "Toby", 3, sim_pearson)
+    jsonify(res)
+    return render_template('findpeople.html', function3 = res)
 
 
 @app.route('/euclidean', methods=['GET'])
 def get_euclidean():
     result = getRecommendations(ratings, "Toby", sim_distance)
-    return jsonify(result)
+    jsonify(result)
+    return render_template('euclidean.html', function = result)
 
 
 @app.route('/pearson', methods=['GET'])
 def get_pearson():
     result2 = getRecommendations(ratings, "Toby", sim_pearson)
-    return jsonify(result2)
+    jsonify(result2)
+    return render_template('pearson.html', function2 = result2)
 
 
 @app.route('/')
@@ -236,13 +239,10 @@ def main2():
 
 @app.route('/itembased')
 def main3():
-    return render_template('itembased.html')
-
-
-
-#@app.route('/itembased')
-#def main3():
-#    return
+    transform_prefs(ratings)
+    itemsim = calculate_similar_items(ratings, 4)
+    result4 = get_recommended_items(ratings, itemsim, "Toby")
+    return render_template('itembased.html', function4 = result4)
 
 
 if __name__ == '__main__':
