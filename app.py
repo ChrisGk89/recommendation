@@ -207,8 +207,8 @@ def get_recommended_items(prefs, itemMatch, user):
 
 
 @app.route('/findpeople', methods=['GET'])
-def get_rmatches():
-    res = topMatches2(ratings, "Toby", sim_pearson())
+def get_matches():
+    res = topMatches2(ratings, "Toby", sim_pearson)
     return jsonify(res)
 
 
