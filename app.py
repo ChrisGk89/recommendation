@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, jsonify
 from flask_restful import Resource, Api
+import itertools as it
 from typing import List, Any, Tuple
 from math import sqrt
 import requests
