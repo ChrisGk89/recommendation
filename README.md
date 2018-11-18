@@ -1,5 +1,6 @@
-# recommendation
-Movie Recommendation System using Python.
+# Movie Recommendation Application
+
+Movie Recommendation App using Python and flask.
 
 First Assignment of the Web Intelligence 2DV515-HT18 course.
 
